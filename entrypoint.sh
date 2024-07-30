@@ -106,7 +106,7 @@ format=$(echo $format | xargs)
 if [ $format ];then
  ARGS="$ARGS --format $format"
 fi
-if [ $template ] ;then
+if [ "$template" ] ;then
  ARGS="$ARGS --template \"$template\""
 fi
 if [ $exitCode ];then
