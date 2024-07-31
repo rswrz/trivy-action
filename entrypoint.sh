@@ -3,79 +3,79 @@ set -e
 while getopts "a:b:c:d:e:f:g:h:i:j:k:l:m:n:o:p:q:r:s:t:u:v:x:y:z:" o; do
    case "${o}" in
        a)
-         export scanType=${OPTARG}
+         export scanType=${OPTARG# }
        ;;
        b)
-         export format=${OPTARG}
+         export format=${OPTARG# }
        ;;
        c)
          export template=${OPTARG# }
        ;;
        d)
-         export exitCode=${OPTARG}
+         export exitCode=${OPTARG# }
        ;;
        e)
-         export ignoreUnfixed=${OPTARG}
+         export ignoreUnfixed=${OPTARG# }
        ;;
        f)
-         export vulnType=${OPTARG}
+         export vulnType=${OPTARG# }
        ;;
        g)
-         export severity=${OPTARG}
+         export severity=${OPTARG# }
        ;;
        h)
-         export output=${OPTARG}
+         export output=${OPTARG# }
        ;;
        i)
-         export imageRef=${OPTARG}
+         export imageRef=${OPTARG# }
        ;;
        j)
-         export scanRef=${OPTARG}
+         export scanRef=${OPTARG# }
        ;;
        k)
-         export skipDirs=${OPTARG}
+         export skipDirs=${OPTARG# }
        ;;
        l)
-         export input=${OPTARG}
+         export input=${OPTARG# }
        ;;
        m)
-         export cacheDir=${OPTARG}
+         export cacheDir=${OPTARG# }
        ;;
        n)
-         export timeout=${OPTARG}
+         export timeout=${OPTARG# }
        ;;
        o)
-         export ignorePolicy=${OPTARG}
+         export ignorePolicy=${OPTARG# }
        ;;
        p)
-         export hideProgress=${OPTARG}
+         export hideProgress=${OPTARG# }
        ;;
        q)
-         export skipFiles=${OPTARG}
+         export skipFiles=${OPTARG# }
        ;;
        r)
-         export listAllPkgs=${OPTARG}
+         export listAllPkgs=${OPTARG# }
        ;;
        s)
-         export scanners=${OPTARG}
+         export scanners=${OPTARG# }
        ;;
        t)
-         export trivyIgnores=${OPTARG}
+         export trivyIgnores=${OPTARG# }
        ;;
        u)
-         export githubPAT=${OPTARG}
+         export githubPAT=${OPTARG# }
        ;;
        v)
-         export trivyConfig=${OPTARG}
+         export trivyConfig=${OPTARG# }
        ;;
        x)
-         export tfVars=${OPTARG}
+         export tfVars=${OPTARG# }
        ;;
        y)
-         export dockerHost=${OPTARG}
+         export dockerHost=${OPTARG# 
        ;;
        z)
-         export limitSeveritiesForSARIF=${OPTARG}
+         export limitSeveritiesForSARIF=${OPTARG# }
        ;;
   esac
 done
