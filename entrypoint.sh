@@ -108,7 +108,7 @@ if [ $format ];then
  ARGS="$ARGS --format $format"
 fi
 if [ "$template" ] ;then
- ARGS="$ARGS --template '$template'"
+ ARGS="$ARGS --template $template"
 fi
 if [ $exitCode ];then
  ARGS="$ARGS --exit-code $exitCode"
