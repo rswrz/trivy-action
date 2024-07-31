@@ -205,14 +205,14 @@ if [ "${format}" == "sarif" ] && [ "${limitSeveritiesForSARIF}" != "true" ]; the
   # SARIF is special. We output all vulnerabilities,
   # regardless of severity level specified in this report.
   # This is a feature, not a bug :)
-  echo "Building SARIF report with options: ${SARIF_ARGS}" "${artifactRef}"
+  echo "::debug::Building SARIF report with options: ${SARIF_ARGS}" "${artifactRef}"
   trivy --quiet ${scanType} --format sarif --output ${output} $SARIF_ARGS ${artifactRef}
 elif [ $trivyConfig ]; then
-   echo "Running Trivy with trivy.yaml config from: " $trivyConfig
+   echo "::debug::Running Trivy with trivy.yaml config from: " $trivyConfig
    trivy --config $trivyConfig ${scanType} "${artifactRef}"
 else
-   echo "Running trivy with options: trivy ${scanType}" "${ARGS[@]}" "${artifactRef}"
-   echo "Global options: " "${GLOBAL_ARGS}"
+   echo "::debug::Running trivy with options: trivy ${scanType}" "${ARGS[@]}" "${artifactRef}"
+   echo "::debug::Global options: " "${GLOBAL_ARGS}"
    trivy $GLOBAL_ARGS ${scanType} "${ARGS[@]}" "${artifactRef}"
 fi
 returnCode=$?
