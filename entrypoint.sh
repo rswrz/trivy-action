@@ -102,45 +102,45 @@ if [ $cacheDir ];then
 fi
 
 SARIF_ARGS=""
-ARGS=""
+declare -a ARGS
 format=$(echo $format | xargs)
 if [ $format ];then
- ARGS="$ARGS --format $format"
+ ARGS+=("--format $format")
 fi
 if [ "$template" ] ;then
- ARGS="$ARGS --template $template"
+ ARGS+=("--template $template")
 fi
 if [ $exitCode ];then
- ARGS="$ARGS --exit-code $exitCode"
+ ARGS+=("--exit-code $exitCode")
  SARIF_ARGS="$SARIF_ARGS --exit-code $exitCode"
 fi
 if [ "$ignoreUnfixed" == "true" ] && [ "$scanType" != "config" ];then
-  ARGS="$ARGS --ignore-unfixed"
+  ARGS+=("--ignore-unfixed")
   SARIF_ARGS="$SARIF_ARGS --ignore-unfixed"
 fi
 if [ $vulnType ] && [ "$scanType" != "config" ] && [ "$scanType" != "sbom" ];then
-  ARGS="$ARGS --vuln-type $vulnType"
+  ARGS+=("--vuln-type $vulnType")
   SARIF_ARGS="$SARIF_ARGS --vuln-type $vulnType"
 fi
 if [ $scanners ];then
-  ARGS="$ARGS --scanners $scanners"
+  ARGS+=("--scanners $scanners")
   SARIF_ARGS="$SARIF_ARGS --scanners $scanners"
 fi
 if [ $severity ];then
-  ARGS="$ARGS --severity $severity"
+  ARGS+=("--severity $severity")
 fi
 if [ $output ];then
-  ARGS="$ARGS --output $output"
+  ARGS+=("--output $output")
 fi
 if [ $skipDirs ];then
   for i in $(echo $skipDirs | tr "," "\n")
   do
-    ARGS="$ARGS --skip-dirs $i"
+    ARGS+=("--skip-dirs $i")
     SARIF_ARGS="$SARIF_ARGS --skip-dirs $i"
   done
 fi
 if [ $tfVars ] && [ "$scanType" == "config" ];then
-  ARGS="$ARGS --tf-vars $tfVars"
+  ARGS+=("--tf-vars $tfVars")
 fi
 
 if [ $trivyIgnores ];then
@@ -155,32 +155,32 @@ if [ $trivyIgnores ];then
       exit 1
     fi
   done
-  ARGS="$ARGS --ignorefile ./trivyignores"
+  ARGS+=("--ignorefile ./trivyignores")
 fi
 if [ $timeout ];then
-  ARGS="$ARGS --timeout $timeout"
+  ARGS+=("--timeout $timeout")
   SARIF_ARGS="$SARIF_ARGS --timeout $timeout"
 fi
 if [ $ignorePolicy ];then
-  ARGS="$ARGS --ignore-policy $ignorePolicy"
+  ARGS+=("--ignore-policy $ignorePolicy")
   SARIF_ARGS="$SARIF_ARGS --ignore-policy $ignorePolicy"
 fi
 if [ "$hideProgress" == "true" ];then
-  ARGS="$ARGS --quiet"
+  ARGS+=("--quiet")
   SARIF_ARGS="$SARIF_ARGS --quiet"
 fi
 if [ $dockerHost ];then
-  ARGS="$ARGS --docker-host $dockerHost"
+  ARGS+=("--docker-host $dockerHost")
 fi
 
 listAllPkgs=$(echo $listAllPkgs | tr -d '\r')
 if [ "$listAllPkgs" == "true" ];then
-  ARGS="$ARGS --list-all-pkgs"
+  ARGS+=("--list-all-pkgs")
 fi
 if [ "$skipFiles" ];then
   for i in $(echo $skipFiles | tr "," "\n")
   do
-    ARGS="$ARGS --skip-files $i"
+    ARGS+=("--skip-files $i")
     SARIF_ARGS="$SARIF_ARGS --skip-files $i"
   done
 fi
@@ -198,9 +198,9 @@ elif [ $trivyConfig ]; then
    echo "Running Trivy with trivy.yaml config from: " $trivyConfig
    trivy --config $trivyConfig ${scanType} "${artifactRef}"
 else
-   echo "Running trivy with options: trivy ${scanType} ${ARGS}" "${artifactRef}"
+   echo "Running trivy with options: trivy ${scanType} ${ARGS[@]}" "${artifactRef}"
    echo "Global options: " "${GLOBAL_ARGS}"
-   trivy $GLOBAL_ARGS ${scanType} ${ARGS} "${artifactRef}"
+   trivy $GLOBAL_ARGS ${scanType} ${ARGS[@]} "${artifactRef}"
 fi
 returnCode=$?
 
